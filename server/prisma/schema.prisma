@@ -18,4 +18,17 @@ model User {
   password_hash String
   role Role @default(adopter)
   created_at DateTime @default(now())
+  shelters Shelter[]
+}
+model Shelter {
+  id String @id @default(uuid())
+  owner_user_id String
+  name String
+  description String?
+  address String
+  is_verified Boolean @default(false)
+  created_at DateTime @default(now())
+
+owner User @relation(fields: [owner_user_id], references: [id])
+
 }
