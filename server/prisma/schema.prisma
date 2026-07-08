@@ -11,6 +11,12 @@ enum Role {
   shelter_staff
   admin
 }
+enum PetStatus {
+  available
+  pending
+  adopted
+}
+
 model User {
   id String @id @default(uuid())
   email String @unique
@@ -30,5 +36,19 @@ model Shelter {
   created_at DateTime @default(now())
 
 owner User @relation(fields: [owner_user_id], references: [id])
+pets Pet[]
+}
+model Pet {
+  id String @id @default(uuid())
+  shelter_id String
+  name String
+  species String
+  breed String?
+  age Int?
+  description String?
+  photo_url String?
+  status PetStatus @default(available)
+  created_at DateTime @default(now())
 
+  shelter Shelter @relation(fields: [shelter_id], references: [id])
 }
