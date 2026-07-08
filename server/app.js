@@ -19,6 +19,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/shelters', shelterRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/pets', petRoutes);
+app.use('/uploads', express.static('uploads'));
 app.use('/api/shelters/:shelterId/pets', shelterPetRoutes);
 app.get('/api/health',(req,res) =>{
   res.json({ status : 'I am working fine' });

@@ -32,7 +32,7 @@ const petController = {
     }
   },
 
-  create: async (req, res) => {
+create: async (req, res) => {
     const { name, species, breed, age, description } = req.body;
     const { shelterId } = req.params;
     try {
@@ -43,8 +43,9 @@ const petController = {
       if (shelter.owner_user_id !== req.user.userId) {
         return res.status(403).json({ message: "You do not own this shelter" });
       }
+      const photo_url = req.file ? `/uploads/${req.file.filename}` : null;
       const newPet = await prisma.pet.create({
-        data: { name, species, breed, age: age ? Number(age) : null, description, shelter_id: shelterId },
+        data: { name, species, breed, age: age ? Number(age) : null, description, shelter_id: shelterId, photo_url },
       });
       res.status(201).json({ message: "Pet created successfully", pet: newPet });
     } catch (error) {
