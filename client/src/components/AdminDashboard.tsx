@@ -66,7 +66,7 @@ export default function AdminDashboard() {
                     <span
                       className={`px-3 py-1 rounded text-sm font-medium ${
                         shelter.is_verified
-                          ? 'bg-green-100 text-green-800'
+                          ? 'bg-butteryellow-100 text-butteryellow-600'
                           : 'bg-yellow-100 text-yellow-800'
                       }`}
                     >
@@ -78,7 +78,7 @@ export default function AdminDashboard() {
                       <button
                         onClick={() => verifyShelterMutation.mutate(shelter.id)}
                         disabled={verifyShelterMutation.isPending}
-                        className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-sm disabled:opacity-50"
+                        className="bg-babypink-500 hover:bg-babypink-600 text-white px-3 py-1 rounded text-sm disabled:opacity-50"
                       >
                         Verify
                       </button>

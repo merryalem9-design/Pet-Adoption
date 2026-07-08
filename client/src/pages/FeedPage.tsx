@@ -82,7 +82,7 @@ export default function FeedPage() {
             {!showPostForm ? (
               <button
                 onClick={() => setShowPostForm(true)}
-                className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                className="w-full bg-babypink-500 hover:bg-babypink-600 text-white font-bold py-2 px-4 rounded"
               >
                 Create Post
               </button>
@@ -198,7 +198,7 @@ function CreatePostForm({
           setFormData({ ...formData, caption: e.target.value })
         }
         placeholder="Write your story..."
-        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-blue-500"
+        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-babypink-400"
         rows={4}
         required
       />
@@ -208,7 +208,7 @@ function CreatePostForm({
         onChange={(e) =>
           setFormData({ ...formData, milestone_label: e.target.value })
         }
-        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-blue-500"
+        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-babypink-400"
       >
         <option value="first_day">First Day</option>
         <option value="first_week">First Week</option>
@@ -228,7 +228,7 @@ function CreatePostForm({
         <button
           type="submit"
           disabled={createPostMutation.isPending}
-          className="flex-1 bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded disabled:opacity-50"
+          className="flex-1 bg-butteryellow-500 hover:bg-butteryellow-600 text-white font-bold py-2 px-4 rounded disabled:opacity-50"
         >
           {createPostMutation.isPending ? 'Creating...' : 'Create Post'}
         </button>
@@ -272,7 +272,7 @@ function FeedPost({
         <div className="flex justify-between items-start mb-4">
           <div>
             <p className="font-semibold text-lg">{post.adopter?.displayName}</p>
-            <span className="inline-block px-2 py-1 text-xs bg-blue-100 text-blue-800 rounded mt-1">
+            <span className="inline-block px-2 py-1 text-xs bg-babypink-100 text-babypink-600 rounded mt-1">
               {post.milestone_label}
             </span>
           </div>

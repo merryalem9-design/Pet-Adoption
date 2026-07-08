@@ -67,7 +67,7 @@ export default function SignupPage() {
                 name="displayName"
                 type="text"
                 required
-                className="mt-1 appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                className="mt-1 appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-babypink-400 focus:border-babypink-400 sm:text-sm"
                 placeholder="John Doe"
                 value={formData.displayName}
                 onChange={handleChange}
@@ -83,7 +83,7 @@ export default function SignupPage() {
                 name="email"
                 type="email"
                 required
-                className="mt-1 appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                className="mt-1 appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-babypink-400 focus:border-babypink-400 sm:text-sm"
                 placeholder="you@example.com"
                 value={formData.email}
                 onChange={handleChange}
@@ -99,7 +99,7 @@ export default function SignupPage() {
                 name="password"
                 type="password"
                 required
-                className="mt-1 appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                className="mt-1 appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-babypink-400 focus:border-babypink-400 sm:text-sm"
                 placeholder="••••••••"
                 value={formData.password}
                 onChange={handleChange}
@@ -113,7 +113,7 @@ export default function SignupPage() {
               <select
                 id="role"
                 name="role"
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-babypink-400 focus:border-babypink-400 sm:text-sm"
                 value={formData.role}
                 onChange={handleChange}
               >
@@ -126,14 +126,14 @@ export default function SignupPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50"
+            className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-babypink-500 hover:bg-babypink-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-babypink-400 disabled:opacity-50"
           >
             {loading ? 'Creating account...' : 'Sign up'}
           </button>
 
           <p className="text-center text-sm text-gray-600">
             Already have an account?{' '}
-            <Link to="/login" className="font-medium text-blue-600 hover:text-blue-500">
+            <Link to="/login" className="font-medium text-babypink-500 hover:text-babypink-400">
               Login
             </Link>
           </p>

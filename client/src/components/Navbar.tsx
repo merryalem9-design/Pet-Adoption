@@ -12,24 +12,21 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="bg-blue-600 text-white shadow-lg">
+    <nav className="bg-babypink-500 text-white shadow-lg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
-          <Link to="/" className="text-2xl font-bold">
+          <Link to="/pets" className="text-2xl font-bold">
             🐾 PawPath
           </Link>
 
           <div className="flex gap-6 items-center">
-            <Link to="/pets" className="hover:bg-blue-700 px-3 py-2 rounded">
+            <Link to="/pets" className="hover:bg-babypink-600 px-3 py-2 rounded">
               Browse Pets
-            </Link>
-            <Link to="/feed" className="hover:bg-blue-700 px-3 py-2 rounded">
-              Feed
             </Link>
 
             {isAuthenticated ? (
               <>
-                <Link to="/dashboard" className="hover:bg-blue-700 px-3 py-2 rounded">
+                <Link to="/dashboard" className="hover:bg-babypink-600 px-3 py-2 rounded">
                   Dashboard
                 </Link>
                 <span className="text-sm">{user?.displayName}</span>
@@ -42,16 +39,10 @@ export default function Navbar() {
               </>
             ) : (
               <>
-                <Link
-                  to="/login"
-                  className="bg-white text-blue-600 hover:bg-gray-100 px-4 py-2 rounded"
-                >
+                <Link to="/login" className="bg-white text-babypink-500 hover:bg-gray-100 px-4 py-2 rounded">
                   Login
                 </Link>
-                <Link
-                  to="/signup"
-                  className="bg-green-500 hover:bg-green-600 px-4 py-2 rounded"
-                >
+                <Link to="/signup" className="bg-green-500 hover:bg-butteryellow-500 px-4 py-2 rounded">
                   Signup
                 </Link>
               </>

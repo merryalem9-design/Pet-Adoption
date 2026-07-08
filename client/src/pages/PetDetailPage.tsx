@@ -75,23 +75,21 @@ export default function PetDetailPage() {
       <div className="max-w-4xl mx-auto">
         <button
           onClick={() => navigate('/pets')}
-          className="mb-6 text-blue-600 hover:text-blue-800"
+          className="mb-6 text-babypink-500 hover:text-babypink-600"
         >
           ← Back to Pets
         </button>
 
         <div className="bg-white rounded-lg shadow overflow-hidden">
           <div className="grid grid-cols-1 md:grid-cols-2">
-            {/* Image */}
             {pet.photo_url && (
               <img
-                src={`/${pet.photo_url}`}
+                src={`http://localhost:3000${pet.photo_url}`}
                 alt={pet.name}
                 className="w-full h-96 object-cover"
               />
             )}
 
-            {/* Details */}
             <div className="p-8">
               <h1 className="text-4xl font-bold text-gray-900 mb-2">{pet.name}</h1>
               <p className="text-lg text-gray-600 mb-4">
@@ -100,7 +98,7 @@ export default function PetDetailPage() {
 
               <div className="mb-6">
                 <span className={`inline-block px-4 py-2 rounded-full text-lg font-medium ${
-                  pet.status === 'available' ? 'bg-green-100 text-green-800' :
+                  pet.status === 'available' ? 'bg-butteryellow-100 text-butteryellow-600' :
                   pet.status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
                   'bg-gray-100 text-gray-800'
                 }`}>
@@ -119,7 +117,7 @@ export default function PetDetailPage() {
                     <div className="flex gap-4">
                       <button
                         onClick={() => setShowApplicationForm(true)}
-                        className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded"
+                        className="flex-1 bg-babypink-500 hover:bg-babypink-600 text-white font-bold py-3 px-4 rounded"
                       >
                         Apply for Adoption
                       </button>
@@ -136,14 +134,14 @@ export default function PetDetailPage() {
                         value={applicationMessage}
                         onChange={(e) => setApplicationMessage(e.target.value)}
                         placeholder="Tell us why you'd like to adopt this pet..."
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-blue-500"
+                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-babypink-400"
                         rows={4}
                       />
                       <div className="flex gap-2">
                         <button
                           onClick={() => applicationMutation.mutate()}
                           disabled={applicationMutation.isPending}
-                          className="flex-1 bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded disabled:opacity-50"
+                          className="flex-1 bg-butteryellow-500 hover:bg-butteryellow-600 text-white font-bold py-2 px-4 rounded disabled:opacity-50"
                         >
                           {applicationMutation.isPending ? 'Submitting...' : 'Submit Application'}
                         </button>

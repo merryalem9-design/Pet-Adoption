@@ -1,5 +1,4 @@
 const { PrismaClient } = require("@prisma/client");
-
 const prisma = new PrismaClient();
 
 const shelterController = {
@@ -10,6 +9,22 @@ const shelterController = {
         data: { name, description, address, owner_user_id: req.user.userId },
       });
       res.status(201).json({ message: "Shelter created successfully", shelter: newShelter });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  },
+
+  getAll: async (req, res) => {
+    try {
+      const shelters = await prisma.shelter.findMany({
+        include: { owner: { select: { name: true, email: true } } },
+      });
+      const mapped = shelters.map((s) => ({
+        ...s,
+        owner: { displayName: s.owner.name, email: s.owner.email },
+      }));
+      res.status(200).json(mapped);
     } catch (error) {
       console.error(error);
       res.status(500).json({ message: "Internal server error" });
@@ -29,6 +44,7 @@ const shelterController = {
       res.status(500).json({ message: "Internal server error" });
     }
   },
+
   update: async (req, res) => {
     const { id } = req.params;
     const { name, description, address } = req.body;

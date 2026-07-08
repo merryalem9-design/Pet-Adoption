@@ -50,7 +50,6 @@ export default function PetsPage() {
       <div className="max-w-7xl mx-auto">
         <h1 className="text-4xl font-bold text-gray-900 mb-8">Find Your Perfect Pet</h1>
 
-        {/* Filters */}
         <div className="bg-white rounded-lg shadow p-6 mb-8">
           <h2 className="text-xl font-semibold mb-4">Filter Pets</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
@@ -60,7 +59,7 @@ export default function PetsPage() {
               placeholder="Species (e.g., Dog)"
               value={filters.species}
               onChange={handleFilterChange}
-              className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500"
+              className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-babypink-400"
             />
             <input
               type="text"
@@ -68,7 +67,7 @@ export default function PetsPage() {
               placeholder="Breed (e.g., Labrador)"
               value={filters.breed}
               onChange={handleFilterChange}
-              className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500"
+              className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-babypink-400"
             />
             <input
               type="number"
@@ -76,7 +75,7 @@ export default function PetsPage() {
               placeholder="Min Age"
               value={filters.ageMin}
               onChange={handleFilterChange}
-              className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500"
+              className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-babypink-400"
             />
             <input
               type="number"
@@ -84,13 +83,13 @@ export default function PetsPage() {
               placeholder="Max Age"
               value={filters.ageMax}
               onChange={handleFilterChange}
-              className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500"
+              className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-babypink-400"
             />
             <select
               name="status"
               value={filters.status}
               onChange={handleFilterChange}
-              className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500"
+              className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-babypink-400"
             >
               <option value="">All Status</option>
               <option value="available">Available</option>
@@ -100,19 +99,16 @@ export default function PetsPage() {
           </div>
         </div>
 
-        {/* Loading State */}
         {isLoading && (
           <div className="text-center text-gray-500">Loading pets...</div>
         )}
 
-        {/* Error State */}
         {error && (
           <div className="bg-red-50 p-4 rounded-lg text-red-800">
             Failed to load pets. Please try again.
           </div>
         )}
 
-        {/* Pets Grid */}
         {data && (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {data.map((pet: Pet) => (
@@ -123,7 +119,7 @@ export default function PetsPage() {
               >
                 {pet.photo_url && (
                   <img
-                    src={`/${pet.photo_url}`}
+                    src={`http://localhost:3000${pet.photo_url}`}
                     alt={pet.name}
                     className="w-full h-48 object-cover"
                   />
@@ -133,7 +129,7 @@ export default function PetsPage() {
                   <p className="text-gray-600">{pet.species} - {pet.breed}</p>
                   <p className="text-sm text-gray-500">Age: {pet.age} years</p>
                   <span className={`inline-block mt-2 px-3 py-1 rounded-full text-sm font-medium ${
-                    pet.status === 'available' ? 'bg-green-100 text-green-800' :
+                    pet.status === 'available' ? 'bg-butteryellow-100 text-butteryellow-600' :
                     pet.status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
                     'bg-gray-100 text-gray-800'
                   }`}>

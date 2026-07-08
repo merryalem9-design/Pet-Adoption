@@ -39,7 +39,7 @@ export default function ShelterDashboard() {
     queryKey: ['shelterApplications'],
     queryFn: async () => {
       const api = getApiClient();
-      const response = await api.get('/shelters/my/applications');
+      const response = await api.get('/applications/shelter');
       return response.data;
     },
   });
@@ -58,13 +58,12 @@ export default function ShelterDashboard() {
 
   return (
     <div className="space-y-6">
-      {/* Tabs */}
       <div className="flex gap-4 border-b">
         <button
           onClick={() => setActiveTab('pets')}
           className={`py-2 px-4 font-medium ${
             activeTab === 'pets'
-              ? 'text-blue-600 border-b-2 border-blue-600'
+              ? 'text-babypink-500 border-b-2 border-babypink-500'
               : 'text-gray-600'
           }`}
         >
@@ -74,7 +73,7 @@ export default function ShelterDashboard() {
           onClick={() => setActiveTab('applications')}
           className={`py-2 px-4 font-medium ${
             activeTab === 'applications'
-              ? 'text-blue-600 border-b-2 border-blue-600'
+              ? 'text-babypink-500 border-b-2 border-babypink-500'
               : 'text-gray-600'
           }`}
         >
@@ -82,7 +81,6 @@ export default function ShelterDashboard() {
         </button>
       </div>
 
-      {/* Pets Tab */}
       {activeTab === 'pets' && (
         <div className="bg-white rounded-lg shadow p-6">
           <h2 className="text-2xl font-bold mb-4">Your Pets</h2>
@@ -94,7 +92,7 @@ export default function ShelterDashboard() {
                 <div key={pet.id} className="border rounded-lg overflow-hidden shadow hover:shadow-lg">
                   {pet.photo_url && (
                     <img
-                      src={`/${pet.photo_url}`}
+                      src={`http://localhost:3000${pet.photo_url}`}
                       alt={pet.name}
                       className="w-full h-40 object-cover"
                     />
@@ -103,7 +101,7 @@ export default function ShelterDashboard() {
                     <h3 className="font-bold text-lg">{pet.name}</h3>
                     <p className="text-gray-600 text-sm">{pet.species} - {pet.breed}</p>
                     <p className="text-gray-600 text-sm">Age: {pet.age}</p>
-                    <span className="inline-block mt-2 px-2 py-1 text-xs bg-blue-100 text-blue-800 rounded">
+                    <span className="inline-block mt-2 px-2 py-1 text-xs bg-babypink-100 text-babypink-600 rounded">
                       {pet.status}
                     </span>
                   </div>
@@ -116,7 +114,6 @@ export default function ShelterDashboard() {
         </div>
       )}
 
-      {/* Applications Tab */}
       {activeTab === 'applications' && (
         <div className="bg-white rounded-lg shadow p-6">
           <h2 className="text-2xl font-bold mb-4">Applications</h2>
@@ -134,8 +131,8 @@ export default function ShelterDashboard() {
                       <p className="text-sm text-gray-700 mt-2">"{app.message}"</p>
                     </div>
                     <span className={`px-3 py-1 rounded text-sm font-medium ${
-                      app.status === 'submitted' ? 'bg-blue-100 text-blue-800' :
-                      app.status === 'approved' ? 'bg-green-100 text-green-800' :
+                      app.status === 'submitted' ? 'bg-babypink-100 text-babypink-600' :
+                      app.status === 'approved' ? 'bg-butteryellow-100 text-butteryellow-600' :
                       app.status === 'rejected' ? 'bg-red-100 text-red-800' :
                       'bg-yellow-100 text-yellow-800'
                     }`}>
@@ -147,27 +144,32 @@ export default function ShelterDashboard() {
                     <div className="flex gap-2">
                       <button
                         onClick={() =>
-                          updateApplicationMutation.mutate({
-                            appId: app.id,
-                            status: 'approved',
-                          })
+                          updateApplicationMutation.mutate({ appId: app.id, status: 'approved' })
                         }
-                        className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded"
+                        className="bg-butteryellow-500 hover:bg-butteryellow-600 text-white px-4 py-2 rounded"
                       >
                         Approve
                       </button>
                       <button
                         onClick={() =>
-                          updateApplicationMutation.mutate({
-                            appId: app.id,
-                            status: 'rejected',
-                          })
+                          updateApplicationMutation.mutate({ appId: app.id, status: 'rejected' })
                         }
                         className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded"
                       >
                         Reject
                       </button>
                     </div>
+                  )}
+
+                  {app.status === 'approved' && (
+                    <button
+                      onClick={() =>
+                        updateApplicationMutation.mutate({ appId: app.id, status: 'adopted' })
+                      }
+                      className="bg-babypink-500 hover:bg-babypink-600 text-white px-4 py-2 rounded"
+                    >
+                      Finalize Adoption
+                    </button>
                   )}
                 </div>
               ))}

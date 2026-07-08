@@ -49,13 +49,12 @@ export default function AdopterDashboard() {
 
   return (
     <div className="space-y-6">
-      {/* Tabs */}
       <div className="flex gap-4 border-b">
         <button
           onClick={() => setActiveTab('applications')}
           className={`py-2 px-4 font-medium ${
             activeTab === 'applications'
-              ? 'text-blue-600 border-b-2 border-blue-600'
+              ? 'text-babypink-500 border-b-2 border-babypink-500'
               : 'text-gray-600'
           }`}
         >
@@ -65,7 +64,7 @@ export default function AdopterDashboard() {
           onClick={() => setActiveTab('favorites')}
           className={`py-2 px-4 font-medium ${
             activeTab === 'favorites'
-              ? 'text-blue-600 border-b-2 border-blue-600'
+              ? 'text-babypink-500 border-b-2 border-babypink-500'
               : 'text-gray-600'
           }`}
         >
@@ -73,7 +72,6 @@ export default function AdopterDashboard() {
         </button>
       </div>
 
-      {/* Applications Tab */}
       {activeTab === 'applications' && (
         <div className="bg-white rounded-lg shadow p-6">
           <h2 className="text-2xl font-bold mb-4">My Applications</h2>
@@ -85,7 +83,7 @@ export default function AdopterDashboard() {
                 <div key={app.id} className="border rounded-lg p-4 flex items-start gap-4">
                   {app.pet?.photo_url && (
                     <img
-                      src={`/${app.pet.photo_url}`}
+                      src={`http://localhost:3000${app.pet.photo_url}`}
                       alt={app.pet?.name}
                       className="w-24 h-24 object-cover rounded"
                     />
@@ -94,8 +92,8 @@ export default function AdopterDashboard() {
                     <h3 className="font-semibold text-lg">{app.pet?.name}</h3>
                     <p className="text-gray-600 text-sm">Message: {app.message}</p>
                     <span className={`inline-block mt-2 px-3 py-1 rounded text-sm font-medium ${
-                      app.status === 'submitted' ? 'bg-blue-100 text-blue-800' :
-                      app.status === 'approved' ? 'bg-green-100 text-green-800' :
+                      app.status === 'submitted' ? 'bg-babypink-100 text-babypink-600' :
+                      app.status === 'approved' ? 'bg-butteryellow-100 text-butteryellow-600' :
                       app.status === 'rejected' ? 'bg-red-100 text-red-800' :
                       'bg-yellow-100 text-yellow-800'
                     }`}>
@@ -111,7 +109,6 @@ export default function AdopterDashboard() {
         </div>
       )}
 
-      {/* Favorites Tab */}
       {activeTab === 'favorites' && (
         <div className="bg-white rounded-lg shadow p-6">
           <h2 className="text-2xl font-bold mb-4">My Favorites</h2>
@@ -121,7 +118,7 @@ export default function AdopterDashboard() {
                 <div key={fav.id} className="border rounded-lg overflow-hidden">
                   {fav.pet?.photo_url && (
                     <img
-                      src={`/${fav.pet.photo_url}`}
+                      src={`http://localhost:3000${fav.pet.photo_url}`}
                       alt={fav.pet?.name}
                       className="w-full h-32 object-cover"
                     />
