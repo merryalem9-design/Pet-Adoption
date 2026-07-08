@@ -1,4 +1,4 @@
-const express= require("express");
+const express = require("express");
 const shelterController = require("../controllers/shelterController");
 const validate = require("../middleware/validate");
 const { shelterSchema } = require("../validators/shelterValidator");
@@ -6,6 +6,8 @@ const { authMiddleware, requireRole } = require("../middleware/auth");
 
 const router = express.Router();
 
+router.get("/mine", authMiddleware, requireRole("shelter_staff"), shelterController.getMine);
 router.post("/", authMiddleware, requireRole("shelter_staff"), validate(shelterSchema), shelterController.create);
 router.patch("/:id", authMiddleware, requireRole("shelter_staff"), validate(shelterSchema), shelterController.update);
+
 module.exports = router;

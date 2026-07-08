@@ -17,22 +17,40 @@ interface AuthStore {
   logout: () => void;
 }
 
+function loadStoredUser(): User | null {
+  const raw = localStorage.getItem('user');
+  if (!raw) return null;
+  try {
+    return JSON.parse(raw) as User;
+  } catch {
+    return null;
+  }
+}
+
+const storedToken = localStorage.getItem('token');
+const storedUser = loadStoredUser();
+
+
+const initialValid = !!storedToken && !!storedUser;
+
 export const useAuthStore = create<AuthStore>((set) => ({
-  user: null,
-  token: localStorage.getItem('token'),
-  isAuthenticated: !!localStorage.getItem('token'),
-  
+  user: initialValid ? storedUser : null,
+  token: initialValid ? storedToken : null,
+  isAuthenticated: initialValid,
+
   setAuth: (user: User, token: string) => {
     localStorage.setItem('token', token);
+    localStorage.setItem('user', JSON.stringify(user));
     set({
       user,
       token,
       isAuthenticated: true,
     });
   },
-  
+
   logout: () => {
     localStorage.removeItem('token');
+    localStorage.removeItem('user');
     set({
       user: null,
       token: null,

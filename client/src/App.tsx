@@ -8,6 +8,7 @@ import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
 import PetsPage from './pages/PetsPage';
 import PetDetailPage from './pages/PetDetailPage';
+import FeedPage from './pages/FeedPage';
 import DashboardPage from './pages/DashboardPage';
 import ProtectedRoute from './components/ProtectedRoute';
 
@@ -28,6 +29,7 @@ function App() {
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/pets" element={<PetsPage />} />
           <Route path="/pets/:id" element={<PetDetailPage />} />
+          <Route path="/feed" element={<FeedPage />} />
           <Route
             path="/dashboard"
             element={

@@ -44,14 +44,16 @@ export default function FeedPage() {
     enabled: isAuthenticated && user?.role === 'adopter',
   });
 
-  const hasAdoptedPet = userApplications?.some(
+  const adoptedApplication = userApplications?.find(
     (app: any) => app.status === 'adopted'
   );
+
+  const hasAdoptedPet = !!adoptedApplication;
 
   const reactMutation = useMutation({
     mutationFn: async ({ postId, reactionType }: { postId: string; reactionType: string }) => {
       const api = getApiClient();
-      const response = await api.post(`/posts/${postId}/reactions`, { type: reactionType });
+      const response = await api.post(`/feed/${postId}/reactions`, { type: reactionType });
       return response.data;
     },
     onSuccess: () => {
@@ -62,7 +64,7 @@ export default function FeedPage() {
   const reportMutation = useMutation({
     mutationFn: async ({ postId, reason }: { postId: string; reason: string }) => {
       const api = getApiClient();
-      const response = await api.post(`/posts/${postId}/report`, { reason });
+      const response = await api.post(`/feed/${postId}/report`, { reason });
       return response.data;
     },
     onSuccess: () => {
@@ -75,7 +77,6 @@ export default function FeedPage() {
       <div className="max-w-2xl mx-auto space-y-6">
         <h1 className="text-4xl font-bold text-gray-900">Pet Adoption Feed</h1>
 
-        {/* Post Creation */}
         {isAuthenticated && user?.role === 'adopter' && hasAdoptedPet && (
           <div className="bg-white rounded-lg shadow p-6">
             <h2 className="text-xl font-semibold mb-4">Share Your Story</h2>
@@ -88,6 +89,7 @@ export default function FeedPage() {
               </button>
             ) : (
               <CreatePostForm
+                applicationId={adoptedApplication.id}
                 onClose={() => setShowPostForm(false)}
                 onSuccess={() => {
                   queryClient.invalidateQueries({ queryKey: ['feed'] });
@@ -98,7 +100,6 @@ export default function FeedPage() {
           </div>
         )}
 
-        {/* Feed */}
         {isLoading ? (
           <div className="text-center text-gray-500">Loading feed...</div>
         ) : feedData?.posts?.length > 0 ? (
@@ -119,7 +120,6 @@ export default function FeedPage() {
               ))}
             </div>
 
-            {/* Pagination */}
             <div className="flex justify-center gap-4">
               <button
                 onClick={() => setPage(Math.max(1, page - 1))}
@@ -149,9 +149,11 @@ export default function FeedPage() {
 }
 
 function CreatePostForm({
+  applicationId,
   onClose,
   onSuccess,
 }: {
+  applicationId: string;
   onClose: () => void;
   onSuccess: () => void;
 }) {
@@ -167,13 +169,15 @@ function CreatePostForm({
       const data = new FormData();
       data.append('caption', formData.caption);
       data.append('milestone_label', formData.milestone_label);
+      data.append('application_id', applicationId);
       if (photo) {
         data.append('photo', photo);
       }
 
-      const response = await api.post('/posts', data, {
-        headers: { 'Content-Type': 'multipart/form-data' },
-      });
+      // Do NOT set Content-Type manually here — the browser needs to
+      // generate the multipart boundary itself. Axios does this
+      // automatically when it sees a FormData body.
+      const response = await api.post('/feed', data);
       return response.data;
     },
     onSuccess() {
@@ -262,7 +266,7 @@ function FeedPost({
     <div className="bg-white rounded-lg shadow overflow-hidden">
       {post.photo_url && (
         <img
-          src={`/${post.photo_url}`}
+          src={`http://localhost:3000${post.photo_url}`}
           alt="Post"
           className="w-full h-96 object-cover"
         />

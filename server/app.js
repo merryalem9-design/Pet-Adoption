@@ -21,22 +21,28 @@ const PORT = config.PORT;
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms'));
 app.use(express.json());
 app.use(cors());
-app.use('/api/auth', authRoutes);
-app.use('/api/shelters', shelterRoutes);
-app.use('/api/admin', adminRoutes);
-app.use('/api/pets', petRoutes);
 app.use('/uploads', express.static('uploads'));
+
+app.use('/api/auth', authRoutes);
+
 app.use('/api/shelters/my/pets', shelterPetRoutes);
 app.use('/api/shelters/:shelterId/pets', shelterPetRoutes);
+app.use('/api/shelters/:shelterId/applications', shelterApplicationRoutes);
+app.use('/api/shelters', shelterRoutes);
+
+app.use('/api/admin', adminRoutes);
+app.use('/api/pets/:petId/applications', petApplicationRoutes);
+app.use('/api/pets', petRoutes);
 app.use('/api/favorites', favoriteRoutes);
 app.use('/api/applications', applicationRoutes);
-app.use('/api/pets/:petId/applications', petApplicationRoutes);
-app.use('/api/shelters/:shelterId/applications', shelterApplicationRoutes);
 app.use('/api/feed', feedRoutes);
+
 app.get('/api/health', (req, res) => {
   res.json({ status: 'I am working fine' });
 });
+
 app.use(errorHandler);
+
 app.listen(PORT, () => {
   logger.info(`Server is running on port ${PORT}`);
 });

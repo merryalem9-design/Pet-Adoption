@@ -3,14 +3,14 @@ const prisma = new PrismaClient();
 
 const applicationController = {
   create: async (req, res) => {
-    const { pet_id, message } = req.body;
+    const pet_id = req.params.petId || req.body.pet_id;
+    const { message } = req.body;
     try {
       const pet = await prisma.pet.findUnique({ where: { id: pet_id } });
       if (!pet) {
         return res.status(404).json({ error: "Pet not found" });
       }
 
-      // Check if already applied
       const existingApp = await prisma.application.findFirst({
         where: { 
           pet_id,
@@ -54,7 +54,6 @@ const applicationController = {
 
   getShelterApplications: async (req, res) => {
     try {
-      // Get user's shelters
       const userShelters = await prisma.shelter.findMany({
         where: { owner_user_id: req.user.userId }
       });
