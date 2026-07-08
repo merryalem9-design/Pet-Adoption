@@ -11,7 +11,7 @@ const ALLOWED_ROLES = ["adopter", "shelter_staff"];
 
 const authController = {
   register: async(req, res) => {
-    const { email, name, password, role} = req.body;
+    const { email, displayName, password, role} = req.body;
     try {
       const existingUser = await prisma.user.findUnique({ where: { email } });
       if (existingUser) {
@@ -22,16 +22,39 @@ const authController = {
       const password_hash = await bcrypt.hash(password, saltRounds);
 
       const newUser = await prisma.user.create({
-        data: { email, name, password_hash, role: finalRole },
+        data: { 
+          email, 
+          displayName, 
+          password_hash, 
+          role: finalRole 
+        },
       });
 
-     const  token = jwt.sign({ userId: newUser.id, role: newUser.role }, process.env.JWT_SECRET, { expiresIn: "1h" });
-      
-    const { password_hash: _, ...safeUser } = newUser;
-  res.status(201).json({ message: "User registered successfully", user: safeUser, token });
+      const token = jwt.sign(
+        { 
+          userId: newUser.id, 
+          email: newUser.email,
+          displayName: newUser.displayName,
+          role: newUser.role 
+        }, 
+        process.env.JWT_SECRET, 
+        { expiresIn: "24h" }
+      );
+       
+      const { password_hash: _, ...safeUser } = newUser;
+      res.status(201).json({ 
+        message: "User registered successfully", 
+        user: {
+          id: safeUser.id,
+          email: safeUser.email,
+          displayName: safeUser.displayName,
+          role: safeUser.role
+        }, 
+        token 
+      });
     } catch (error) {
       console.error(error);
-      res.status(500).json({ message: "Internal server error" });
+      res.status(500).json({ error: "Internal server error" });
     }
   },
 
@@ -40,21 +63,35 @@ const authController = {
     try {
       const user = await prisma.user.findUnique({ where: { email } });
       if (!user) {
-        return res.status(400).json({ message: "Invalid email or password" });
+        return res.status(400).json({ error: "Invalid email or password" });
       }
       const isPasswordValid = await bcrypt.compare(password, user.password_hash);
       if (!isPasswordValid) {
-        return res.status(400).json({ message: "Invalid email or password" });
+        return res.status(400).json({ error: "Invalid email or password" });
       }
       const token = jwt.sign(
-        { userId: user.id, role: user.role },
+        { 
+          userId: user.id, 
+          email: user.email,
+          displayName: user.displayName,
+          role: user.role 
+        },
         process.env.JWT_SECRET,
-        { expiresIn: "1h" }
+        { expiresIn: "24h" }
       );
-      res.status(200).json({ message: "Login successful", token });
+      res.status(200).json({ 
+        message: "Login successful", 
+        user: {
+          id: user.id,
+          email: user.email,
+          displayName: user.displayName,
+          role: user.role
+        },
+        token 
+      });
     } catch (error) {
       console.error(error);
-      res.status(500).json({ message: "Internal server error" });
+      res.status(500).json({ error: "Internal server error" });
     }
   },
 };
