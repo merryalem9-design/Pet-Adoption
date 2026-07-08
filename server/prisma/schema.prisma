@@ -16,7 +16,12 @@ enum PetStatus {
   pending
   adopted
 }
-
+enum ApplicationStatus {
+  submitted
+  approved
+  rejected
+  adopted
+}
 model User {
   id String @id @default(uuid())
   email String @unique
@@ -25,6 +30,8 @@ model User {
   role Role @default(adopter)
   created_at DateTime @default(now())
   shelters Shelter[]
+  favorites Favorite[]
+  applications Application[]
 }
 model Shelter {
   id String @id @default(uuid())
@@ -51,4 +58,28 @@ model Pet {
   created_at DateTime @default(now())
 
   shelter Shelter @relation(fields: [shelter_id], references: [id])
+  favorites Favorite[]
+  applications Application[]
+}
+model Favorite {
+  id String @id @default(uuid())
+  user_id String
+  pet_id String
+  created_at DateTime @default(now())
+
+  user User @relation(fields: [user_id], references: [id])
+  pet Pet @relation(fields: [pet_id], references: [id])
+
+  @@unique([user_id, pet_id])
+}
+model Application {
+  id String @id @default(uuid())
+  pet_id String
+  adopter_id String
+  status ApplicationStatus @default(submitted)
+  message String?
+  created_at DateTime @default(now())
+
+  pet Pet @relation(fields: [pet_id], references: [id])
+  adopter User @relation(fields: [adopter_id], references: [id])
 }
