@@ -7,4 +7,5 @@ const { authMiddleware, requireRole } = require("../middleware/auth");
 const router = express.Router();
 
 router.post("/", authMiddleware, requireRole("shelter_staff"), validate(shelterSchema), shelterController.create);
+router.patch("/:id", authMiddleware, requireRole("shelter_staff"), validate(shelterSchema), shelterController.update);
 module.exports = router;
