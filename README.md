@@ -27,8 +27,8 @@ A full-stack pet adoption platform where adopters can find pets, shelters can ma
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/yourusername/pet-adoption-platform.git
-cd pet-adoption-platform
+git clone https://github.com/merryalem9-design/Pet-Adoption.git
+cd Pet-Adoption
 ```
 
 ### 2. Backend Setup
@@ -79,9 +79,9 @@ Client runs at: `http://localhost:5173`
 
 ## Key Features
 
-- **Adopters**: Browse pets, apply for adoption, save favorites, share updates
-- **Shelter Staff**: Manage shelter profile, list pets, review applications
-- **Admins**: Verify shelters, review reported posts
+- **Adopters**: Browse pets, apply for adoption, save favorites
+- **Shelter Staff**: Create and manage shelter profile, list pets with photos, review and approve/reject applications
+- **Admins**: Verify shelter accounts
 
 ## API Endpoints
 
@@ -90,11 +90,17 @@ Client runs at: `http://localhost:5173`
 | POST | `/api/auth/signup` | Register user |
 | POST | `/api/auth/login` | Login user |
 | GET | `/api/pets` | List pets with filters |
+| GET | `/api/shelters/mine` | Get the logged-in shelter's profile |
+| POST | `/api/shelters` | Create shelter |
+| POST | `/api/shelters/my/pets` | Add a pet (shelter, photo upload) |
 | POST | `/api/applications` | Submit adoption application |
 | GET | `/api/applications/mine` | Get my applications |
-| POST | `/api/shelters` | Create shelter |
-| GET | `/api/feed` | Get public feed |
+| PATCH | `/api/applications/:id/status` | Approve/reject/finalize an application (shelter, ownership-checked, transactional) |
+| PATCH | `/api/admin/shelters/:id/verify` | Verify a shelter (admin only) |
 
 ## Database Schema
 
-The schema includes models for Users, Shelters, Pets, Applications, Favorites, and Feed posts.
+Models: Users, Shelters, Pets, Applications, Favorites.
+
+- Full DDL: [`server/docs/schema.sql`](./server/docs/schema.sql)
+- ER Diagram: [`server/docs/er-diagram.png`](./server/docs/er-diagram.png)
