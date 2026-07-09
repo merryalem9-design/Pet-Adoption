@@ -12,7 +12,6 @@ const favoriteRoutes = require('./routes/favoriteRoutes');
 const applicationRoutes = require('./routes/applicationRoutes');
 const petApplicationRoutes = require('./routes/petApplicationRoutes');
 const shelterApplicationRoutes = require('./routes/shelterApplicationRoutes');
-const feedRoutes = require('./routes/feedRoutes');
 const errorHandler = require('./middleware/errorHandler');
 
 const app = express();
@@ -25,6 +24,7 @@ app.use('/uploads', express.static('uploads'));
 
 app.use('/api/auth', authRoutes);
 
+
 app.use('/api/shelters/my/pets', shelterPetRoutes);
 app.use('/api/shelters/:shelterId/pets', shelterPetRoutes);
 app.use('/api/shelters/:shelterId/applications', shelterApplicationRoutes);
@@ -35,7 +35,6 @@ app.use('/api/pets/:petId/applications', petApplicationRoutes);
 app.use('/api/pets', petRoutes);
 app.use('/api/favorites', favoriteRoutes);
 app.use('/api/applications', applicationRoutes);
-app.use('/api/feed', feedRoutes);
 
 app.get('/api/health', (req, res) => {
   res.json({ status: 'I am working fine' });

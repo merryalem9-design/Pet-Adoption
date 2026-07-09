@@ -23,9 +23,6 @@ export default function Navbar() {
             <Link to="/pets" className="hover:bg-babypink-600 px-3 py-2 rounded">
               Browse Pets
             </Link>
-            <Link to="/feed" className="hover:bg-babypink-600 px-3 py-2 rounded">
-              Feed
-            </Link>
 
             {isAuthenticated ? (
               <>

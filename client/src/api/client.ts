@@ -18,6 +18,17 @@ export const initializeApiClient = () => {
       if (token) {
         config.headers.Authorization = `Bearer ${token}`;
       }
+
+      // FormData bodies (photo uploads) need the browser to generate
+      // their own multipart boundary. The instance-level default of
+      // 'application/json' above would otherwise stick and break
+      // multer's parsing on the backend, since Axios only
+      // auto-generates the multipart Content-Type when no
+      // Content-Type has already been set.
+      if (config.data instanceof FormData) {
+        delete config.headers['Content-Type'];
+      }
+
       return config;
     },
     (error) => Promise.reject(error)
