@@ -1,5 +1,6 @@
 const express = require('express');
 const config = require('./config');
+const path = require('path');
 const morgan = require('morgan');
 const cors = require('cors');
 const logger = require('./middleware/logger');
@@ -37,6 +38,11 @@ app.use('/api/pets/:petId/applications', petApplicationRoutes);
 app.use('/api/pets', petRoutes);
 app.use('/api/favorites', favoriteRoutes);
 app.use('/api/applications', applicationRoutes);
+app.use(express.static(path.join(__dirname, '../client/dist')));
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../client/dist/index.html'));
+});
 
 app.get('/api/health', (req, res) => {
   res.json({ status: 'I am working fine' });
