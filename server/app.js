@@ -20,9 +20,7 @@ const PORT = config.PORT;
 
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms'));
 app.use(express.json());
-app.use(cors({
-  origin: ['https://pet-adoption-gamma.vercel.app', 'https://pet-adoption-git-main-mariyamawit.vercel.app']
-}));
+app.use(cors());
 app.use('/uploads', express.static('uploads'));
 
 app.use('/api/auth', authRoutes);
