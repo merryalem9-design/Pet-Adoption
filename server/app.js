@@ -3,6 +3,7 @@ const config = require('./config');
 const morgan = require('morgan');
 const cors = require('cors');
 const path = require('path');
+const fs = require('fs'); // <--- Added import for file system
 const logger = require('./middleware/logger');
 const authRoutes = require('./routes/authRoutes');
 const shelterRoutes = require('./routes/shelterRoutes');
@@ -21,12 +22,22 @@ const PORT = config.PORT;
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms'));
 app.use(express.json());
 
-app.use(cors()); 
+// ==========================================
+// CREATE UPLOADS FOLDER IF IT DOESN'T EXIST
+// ==========================================
+const uploadDir = './uploads';
+if (!fs.existsSync(uploadDir) && process.env.NODE_ENV === 'production') {
+    fs.mkdirSync(uploadDir);
+}
+// ==========================================
 
+app.use(cors()); 
 
 app.use('/uploads', express.static('uploads'));
 
-
+// ==========================================
+// 1. ALL API ROUTES
+// ==========================================
 app.use('/api/auth', authRoutes);
 app.use('/api/shelters/my/pets', shelterPetRoutes);
 app.use('/api/shelters/:shelterId/pets', shelterPetRoutes);
