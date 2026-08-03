@@ -1,6 +1,6 @@
-const { PrismaClient } = require("@prisma/client");
-const prisma = new PrismaClient();
-
+//const { PrismaClient } = require("@prisma/client");
+//const prisma = new PrismaClient();
+const prisma = require("../prisma/client");
 const applicationController = {
   create: async (req, res) => {
     const pet_id = req.params.petId || req.body.pet_id;

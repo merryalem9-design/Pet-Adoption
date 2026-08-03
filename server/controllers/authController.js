@@ -1,9 +1,9 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
-const { PrismaClient } = require("@prisma/client");
+//const { PrismaClient } = require("@prisma/client");
 
-const prisma = new PrismaClient();
-
+//const prisma = new PrismaClient();
+const prisma = require("../prisma/client");
 const ALLOWED_ROLES = ["adopter", "shelter_staff"];
 
 const authController = {

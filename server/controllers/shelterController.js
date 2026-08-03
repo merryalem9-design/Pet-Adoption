@@ -1,6 +1,6 @@
-const { PrismaClient } = require("@prisma/client");
-const prisma = new PrismaClient();
-
+/*const { PrismaClient } = require("@prisma/client");
+const prisma = new PrismaClient();*/
+const prisma = require("../prisma/client");
 const shelterController = {
   create: async (req, res) => {
     const { name, description, address } = req.body;
